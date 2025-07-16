@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     let count = 0;
+    let pages = document.getElementsByClassName("page");
     document.addEventListener("wheel", (e) => {
         if (e.deltaY > 0) {
-            window.scrollTo({
-              top: window.scrollY + window.innerHeight,
-              behavior: "smooth",
-            });
             if (count < 4) {
+              window.scrollTo({
+                top: window.scrollY + pages[count].clientHeight,
+                behavior: "smooth",
+              });
               count++;
               hideSeeMoreText(count);
               reverseArrow(count);
@@ -14,11 +15,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
         else {
-            window.scrollTo({
-              top: window.scrollY - window.innerHeight,
-              behavior: "smooth",
-            });
             if (count > 0) {
+              window.scrollTo({
+                top: window.scrollY - pages[count].clientHeight,
+                behavior: "smooth",
+              });
               count--;
               hideSeeMoreText(count);
               reverseArrow(count);
@@ -33,25 +34,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.addEventListener("touchend", function (event) {
+      
       const touchEndY = event.changedTouches[0].clientY;
       const diffY = touchEndY - touchStartY;
       if (diffY < 0) {
-        window.scrollTo({
-          top: window.scrollY + window.innerHeight,
-          behavior: "smooth",
-        });
         if (count < 4) {
+          window.scrollTo({
+            top: window.scrollY + pages[count].clientHeight,
+            behavior: "smooth",
+          });
           count++;
           hideSeeMoreText(count);
           reverseArrow(count);
           applyAnimation(count);
         }
       } else {
-        window.scrollTo({
-          top: window.scrollY - window.innerHeight,
-          behavior: "smooth",
-        });
         if (count > 0) {
+          window.scrollTo({
+            top: window.scrollY - pages[count].clientHeight,
+            behavior: "smooth",
+          });
           count--;
           hideSeeMoreText(count);
           reverseArrow(count);
