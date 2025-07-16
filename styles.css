@@ -44,24 +44,24 @@ table {
 
 :root {
 	--primary-text-color: #4D362A;
-	--background-url: url('/public/assets/background.png');
+	--background-url: url('../assets/background.png');
 }
 
 @font-face {
 	font-family: Kuro;
-	src: url('/public/fonts/Kuro-Medium.otf') format('opentype');
+	src: url('../fonts/Kuro-Medium.otf') format('opentype');
 	font-weight: 500;
 }
 
 @font-face {
 	font-family: Kuro;
-	src: url('/public/fonts/Kuro-DemiBold.otf') format('opentype');
+	src: url('../fonts/Kuro-DemiBold.otf') format('opentype');
 	font-weight: 600;
 }
 
 @font-face {
 	font-family: Kuro;
-	src: url('/public/fonts/Kuro\ Bold.otf') format('opentype');
+	src: url('../fonts/Kuro\ Bold.otf') format('opentype');
 	font-weight: 700;
 }
 
