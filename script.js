@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     let count = 0;
     let pages = document.getElementsByClassName("page");
-    const toolbarHeight = getComputedStyle(
+    const toolbarHeight = parseFloat(getComputedStyle(
       document.documentElement
-    ).getPropertyValue("env(safe-area-inset-bottom)") ?? 0;
+    ).getPropertyValue("env(safe-area-inset-bottom)")) ?? 0;
     document.addEventListener("wheel", (e) => {
         if (e.deltaY > 0) {
             if (count < 4) {
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (count > 0) {
               window.scrollTo({
                 top:
-                  window.scrollY - (pages[count].clientHeight + toolbarHeight),
+                  window.scrollY + pages[count - 1].getBoundingClientRect().top,
                 behavior: "smooth",
               });
               count--;
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (diffY < 0) {
         if (count < 4) {
           window.scrollTo({
-            top: window.scrollY + (pages[count].clientHeight + toolbarHeight),
+            top: window.scrollY + (pages[count].clientHeight),
             behavior: "smooth",
           });
           count++;
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         if (count > 0) {
           window.scrollTo({
-            top: window.scrollY - (pages[count].clientHeight + toolbarHeight),
+            top: window.scrollY + pages[count - 1].getBoundingClientRect().top,
             behavior: "smooth",
           });
           count--;
