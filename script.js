@@ -1,14 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
     let count = 0;
     let pages = document.getElementsByClassName("page");
-    const toolbarHeight = parseFloat(getComputedStyle(
-      document.documentElement
-    ).getPropertyValue("env(safe-area-inset-bottom)")) ?? 0;
     document.addEventListener("wheel", (e) => {
         if (e.deltaY > 0) {
             if (count < 4) {
               window.scrollTo({
-                top: window.scrollY + (pages[count].clientHeight + toolbarHeight),
+                top: window.scrollY + (pages[count].clientHeight),
                 behavior: "smooth",
               });
               count++;
