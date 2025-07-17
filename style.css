@@ -110,7 +110,7 @@ h1 {
 	flex-direction: column;
 	align-items: center;
 	gap: 1rem;
-	padding: 1.5rem 1.3rem calc(17dvh + env(safe-area-inset-bottom)) 1.3rem;
+	padding: 1.5rem 1.3rem calc(19dvh + env(safe-area-inset-bottom)) 1.3rem;
 	box-sizing: border-box;
 	border-top-left-radius: 2.5rem;
 	border-top-right-radius: 2.5rem;
@@ -134,7 +134,7 @@ h1 {
 #see-more {
 	position: fixed;
 	width: 100%;
-	bottom: .75rem;
+	bottom: .65rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -187,6 +187,6 @@ h1 {
 
 	100% {
 		width: 85%;
-		height: 46%;
+		height: 48%;
 	}
 }
