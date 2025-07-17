@@ -1,46 +1,80 @@
 document.addEventListener("DOMContentLoaded", () => {
     let count = 0;
     let pages = document.getElementsByClassName("page");
-    document.addEventListener("wheel", (e) => {
-        if (e.deltaY > 0) {
-            if (count < 4) {
-              window.scrollTo({
-                top: window.scrollY + (pages[count].clientHeight),
-                behavior: "smooth",
-              });
-              count++;
-              hideSeeMoreText(count);
-              reverseArrow(count);
-              applyAnimation(count);
-            }
+    document.addEventListener("wheel", (event) => {
+        if (!event.target.parentElement.classList.contains("description")) {
+          event.preventDefault();
         }
-        else {
-            if (count > 0) {
-              window.scrollTo({
-                top:
-                  window.scrollY + pages[count - 1].getBoundingClientRect().top,
-                behavior: "smooth",
-              });
-              count--;
-              hideSeeMoreText(count);
-              reverseArrow(count);
-            }
+        const description = pages[count].querySelector(".description");
+        const rect = description ? description.getBoundingClientRect() : null;
+        const scrollTop = description ? description.scrollTop : 0;
+        const scrollHeight = description ? description.scrollHeight : 0;
+        const clientHeight = description ? description.clientHeight : 0;
+        const reachBottom = scrollTop + clientHeight >= scrollHeight - 1;
+        const reachTop = description && scrollTop === 0;
+        if (
+          (rect === null ||
+            touchStartY <= rect.top ||
+            touchStartY >= rect.bottom ||
+            reachBottom) &&
+          event.deltaY > 0
+        ) {
+          if (count < 4) {
+            window.scrollTo({
+              top: window.scrollY + pages[count].clientHeight,
+              behavior: "smooth",
+            });
+            count++;
+            hideSeeMoreText(count);
+            reverseArrow(count);
+            applyAnimation(count);
+          }
+        } else if (
+          (rect === null ||
+            touchStartY <= rect.top ||
+            touchStartY >= rect.bottom ||
+            reachTop) &&
+          diffY > 0
+        ) {
+          if (count > 0 && event.deltaY < 0) {
+            window.scrollTo({
+              top:
+                window.scrollY + pages[count - 1].getBoundingClientRect().top,
+              behavior: "smooth",
+            });
+            count--;
+            hideSeeMoreText(count);
+            reverseArrow(count);
+          }
         }
-    });
+    }, { passive: false });
     
     let touchStartY = 0;
-
     document.addEventListener("touchstart", function (event) {
+      if (!event.target.parentElement.classList.contains("description")) {
+        event.preventDefault();
+      }
       touchStartY = event.touches[0].clientY;
-    });
+    }, { passive: false });
 
     document.addEventListener("touchend", function (event) {
       const touchEndY = event.changedTouches[0].clientY;
       const diffY = touchEndY - touchStartY;
-      if (diffY < 0) {
+      const description = pages[count].querySelector(".description");
+      const rect = description ? description.getBoundingClientRect() : null;
+      const scrollTop = description ? description.scrollTop : 0;
+      const scrollHeight = description ? description.scrollHeight : 0;
+      const clientHeight = description ? description.clientHeight : 0;
+      const reachBottom = scrollTop + clientHeight >= scrollHeight - 1;
+      const reachTop = description && scrollTop === 0;
+      if (
+        (rect === null || (touchStartY <= rect.top ||
+        touchStartY >= rect.bottom) || reachBottom) &&
+        diffY < 0
+      ) {
         if (count < 4) {
           window.scrollTo({
-            top: window.scrollY + (pages[count].clientHeight),
+            top: window.scrollY + pages[count].clientHeight,
             behavior: "smooth",
           });
           count++;
@@ -48,7 +82,12 @@ document.addEventListener("DOMContentLoaded", () => {
           reverseArrow(count);
           applyAnimation(count);
         }
-      } else {
+      } else if (
+        (rect === null ||
+          touchStartY <= rect.top ||
+          touchStartY >= rect.bottom || reachTop) &&
+        diffY > 0
+      ) {
         if (count > 0) {
           window.scrollTo({
             top: window.scrollY + pages[count - 1].getBoundingClientRect().top,

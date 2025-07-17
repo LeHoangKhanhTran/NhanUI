@@ -82,12 +82,13 @@ h1 {
 .page {
 	position: relative;
 	width: 100%; 
-	height: 100vh; 
+	height: 100dvh; 
 	display: flex; 
 	justify-content: center;
 	background: var(--background-url);
 	background-repeat: no-repeat;
 	background-size: cover;
+	overflow-y: scroll;
 }
 
 #first-page img {
@@ -102,39 +103,42 @@ h1 {
 
 .description {
 	width: 100%;
-	max-height: 55%;
+	height: 52%;
 	position: absolute;
 	bottom: 0;
 	text-align: center;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 1rem;
-	padding: 1.5rem 1.3rem calc(20dvh + env(safe-area-inset-bottom)) 1.3rem;
+	padding: 1.5rem 1.3rem calc(21dvh + env(safe-area-inset-bottom)) 1.3rem;
 	box-sizing: border-box;
 	border-top-left-radius: 2.5rem;
 	border-top-right-radius: 2.5rem;
 	box-shadow: 0px -10px 20px 0px rgba(0, 0, 0, 0.1);
 	opacity: 0;
 	transform: translateY(100%);
+	overflow-y: scroll;
 }
 
 .description legend {
 	text-transform: uppercase;
 	font-size: 1.4rem;
 	font-weight: 600;
+	margin-block-end: 1rem;
 }
 
 .description p {
 	font-weight: 400;
-	line-height: 1.15rem;
+	line-height: 1.2em;
 	font-size: .94rem;
+	margin-block-start: 0;
+	margin-block-end: 0;
 }
 
 #see-more {
 	position: fixed;
 	width: 100%;
-	bottom: .6rem;
+	bottom: .55rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
