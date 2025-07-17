@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Four Nhans</title>
+    <link rel="preload" href="./public/assets/background.png" as="image">
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
 </head>
-<body>
+<body style="background-image: url('./public/assets/background.png');">
     <div class="page" id="first-page">
         <img src="./public/assets/Page-1.svg" alt="first-page-img">
     </div>
@@ -87,9 +88,11 @@ Với cách suy nghĩ như vậy, ta cũng dễ dàng hiểu rằng, ở đời 
 đổi thay, hãy cho sẻ chia để nhận về lòng nhân ái …</p>
         </section>
     </div>
-    <div id="see-more">
+    <div id="see-more" class="see-more-container">
         <p id="see-more-text">Xem thêm</p>
-        <img id="arrow" src="./public/assets/arrow.svg" alt="downward-arrow">
+        <div class="arrow-container">
+            <img src="./public/assets/arrow.svg" alt="downward-arrow" id="arrow">
+        </div>
     </div>
 </body>
 </html>
