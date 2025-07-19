@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             count--;
             hideSeeMoreText(count);
-            reverseArrow(count);
+            reverseArrow(count, arrow);
           }
         }
     }, { passive: false });
@@ -61,53 +61,57 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { passive: false });
 
     document.addEventListener("touchend", function (event) {
-      const touchEndY = event.changedTouches[0].clientY;
-      const diffY = touchEndY - touchStartY;
-      const description = pages[count].querySelector(".description");
-      const rect = description ? description.getBoundingClientRect() : null;
-      const scrollTop = description ? description.scrollTop : 0;
-      const scrollHeight = description ? description.scrollHeight : 0;
-      const clientHeight = description ? description.clientHeight : 0;
-      const reachBottom = scrollTop + clientHeight >= scrollHeight - 1;
-      const reachTop = description && scrollTop === 0;
-      if (
-        (rect === null || (touchStartY <= rect.top ||
-        touchStartY >= rect.bottom) || reachBottom) &&
-        diffY < 0 && Math.abs(diffY) > 200
-      ) {
-        if (count < 4) {
-          window.scrollTo({
-            top: window.scrollY + pages[count].clientHeight,
-            behavior: "smooth",
-          });
-          count++;
-          hideSeeMoreText(count);
-          reverseArrow(count);
-          applyAnimation(count);
-        }
-      } else if (
-        (rect === null ||
-          touchStartY <= rect.top ||
-          touchStartY >= rect.bottom ||
-          reachTop) &&
-        diffY > 0 &&
-        Math.abs(diffY) > 200
-      ) {
-        if (count > 0) {
-          window.scrollTo({
-            top: window.scrollY + pages[count - 1].getBoundingClientRect().top,
-            behavior: "smooth",
-          });
-          count--;
-          hideSeeMoreText(count);
-          reverseArrow(count);
+      if (!event.target.parentElement.classList.contains("arrow-container")) {
+        const touchEndY = event.changedTouches[0].clientY;
+        const diffY = touchEndY - touchStartY;
+        const description = pages[count].querySelector(".description");
+        const rect = description ? description.getBoundingClientRect() : null;
+        const scrollTop = description ? description.scrollTop : 0;
+        const scrollHeight = description ? description.scrollHeight : 0;
+        const clientHeight = description ? description.clientHeight : 0;
+        const reachBottom = scrollTop + clientHeight >= scrollHeight - 1;
+        const reachTop = description && scrollTop === 0;
+        if (
+          (rect === null ||
+            touchStartY <= rect.top ||
+            touchStartY >= rect.bottom ||
+            reachBottom) &&
+          diffY < 0 &&
+          Math.abs(diffY) > 200
+        ) {
+          if (count < 4) {
+            window.scrollTo({
+              top: window.scrollY + pages[count].clientHeight,
+              behavior: "smooth",
+            });
+            count++;
+            hideSeeMoreText(count);
+            reverseArrow(count, arrow);
+            applyAnimation(count);
+          }
+        } else if (
+          (rect === null ||
+            touchStartY <= rect.top ||
+            touchStartY >= rect.bottom ||
+            reachTop) &&
+          diffY > 0 &&
+          Math.abs(diffY) > 200
+        ) {
+          if (count > 0) {
+            window.scrollTo({
+              top:
+                window.scrollY + pages[count - 1].getBoundingClientRect().top,
+              behavior: "smooth",
+            });
+            count--;
+            hideSeeMoreText(count);
+            reverseArrow(count, arrow);
+          }
         }
       }
-
     });
     
-    arrow.addEventListener("click", (event) => {
-      console.log("A")
+    arrow.addEventListener("click", () => {
       if (count === 4) {
         window.scrollTo({
           top: window.scrollY + pages[count - 1].getBoundingClientRect().top,
@@ -115,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         count--;
         hideSeeMoreText(count);
-        reverseArrow(count);
+        reverseArrow(count, arrow);
       }
       else if (count >= 0) {
         window.scrollTo({
@@ -124,31 +128,35 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         count++;
         hideSeeMoreText(count);
-        reverseArrow(count);
+        reverseArrow(count, arrow);
         applyAnimation(count);
       }
     })
+
+    
 })
+
+window.addEventListener("load", () => {
+  history.scrollRestoration = "manual";
+});
 
 function hideSeeMoreText(count) {
   if (count > 0) {
     let text = document.getElementById("see-more-text");
-    text.style.display = "none";
+    text.style.visibility = "hidden"
   }
   else {
     let text = document.getElementById("see-more-text");
-    text.style.display = "flex";
+    text.style.visibility = "visible";
   }
 }
 
-function reverseArrow(count) {
-  if (count === 4) {
-    let arrow = document.getElementById("arrow");
-    arrow.style.animation = "updown-reverse 2s infinite alternate";
+function reverseArrow(count, arrow) {
+  if (count < 4) {
+    arrow.className = "updown";
   }
   else {
-    let arrow = document.getElementById("arrow");
-    arrow.style.animation = "updown 2s infinite alternate";
+    arrow.className = "updown-reverse"
   }
 }
 
@@ -157,9 +165,9 @@ function applyAnimation(count) {
     let page = document.querySelectorAll(".page")[count];
     let image = page.querySelector("img");
     let description = page.querySelector(".description");
-    if (image.style.animation === "" && description.style.animation === "") {
-      image.style.animation = "zoom-out 1s 1s forwards";
-      description.style.animation = "show-up 1s 1s forwards";
+    if (!image.classList.contains("zoom-out") && !description.classList.contains("show-up")) {
+      image.classList.add("zoom-out");
+      description.classList.add("show-up");
     }
   }
 }

@@ -51,18 +51,21 @@ table {
 	font-family: Kuro;
 	src: url('./public/fonts/Kuro-Medium.otf') format('opentype');
 	font-weight: 500;
+	font-display: swap;
 }
 
 @font-face {
 	font-family: Kuro;
 	src: url('./public/fonts/Kuro-DemiBold.otf') format('opentype');
 	font-weight: 600;
+	font-display: swap;
 }
 
 @font-face {
 	font-family: Kuro;
 	src: url('./public/fonts/Kuro\ Bold.otf') format('opentype');
 	font-weight: 700;
+	font-display: swap;
 }
 
 body {
@@ -143,11 +146,24 @@ h1 {
 	flex-direction: column;
 	align-items: center;
 	font-weight: 500;
+	will-change: transform;
 }
 
 
-#arrow {
-	animation: updown 2s infinite alternate;
+.updown {
+	animation: updown 1.5s infinite alternate;
+}
+
+.updown-reverse {
+	animation: updown-reverse 1.5s infinite alternate;
+}
+
+.zoom-out {
+	animation: zoom-out 1s 1s forwards;
+}
+
+.show-up {
+	animation: show-up 1s 1s forwards;
 }
 
 @keyframes updown {
