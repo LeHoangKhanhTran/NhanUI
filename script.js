@@ -27,8 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             count++;
             hideSeeMoreText(count);
-            reverseArrow(count);
+            reverseArrow(count, arrow);
             applyAnimation(count);
+            console.log(count)
           }
         } else if (
           rect === null ||
