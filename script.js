@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!event.target.parentElement.classList.contains("description")) {
           event.preventDefault();
         }
-        const description = pages[count].querySelector(".description");
+        const descriptions = document.querySelectorAll(".description");
+        const description = descriptions[count];
         const rect = description ? description.getBoundingClientRect() : null;
         const scrollTop = description ? description.scrollTop : 0;
         const scrollHeight = description ? description.scrollHeight : 0;
@@ -29,7 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
             hideSeeMoreText(count);
             reverseArrow(count, arrow);
             applyAnimation(count);
-            console.log(count)
+            setTimeout(() => {
+              descriptions.forEach((el) => (el.scrollTop = 0));
+            }, 700)
           }
         } else if (
           rect === null ||
@@ -46,6 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
             count--;
             hideSeeMoreText(count);
             reverseArrow(count, arrow);
+            setTimeout(() => {
+              descriptions.forEach((el) => (el.scrollTop = 0));
+            }, 700)
           }
         }
     }, { passive: false });
@@ -65,7 +71,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!event.target.parentElement.classList.contains("arrow-container")) {
         const touchEndY = event.changedTouches[0].clientY;
         const diffY = touchEndY - touchStartY;
-        const description = pages[count].querySelector(".description");
+        const descriptions = document.querySelectorAll(".description")
+        const description = descriptions[count];
         const rect = description ? description.getBoundingClientRect() : null;
         const scrollTop = description ? description.scrollTop : 0;
         const scrollHeight = description ? description.scrollHeight : 0;
@@ -78,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
             touchStartY >= rect.bottom ||
             reachBottom) &&
           diffY < 0 &&
-          Math.abs(diffY) > 200
+          Math.abs(diffY) > 190
         ) {
           if (count < 4) {
             window.scrollTo({
@@ -89,6 +96,9 @@ document.addEventListener("DOMContentLoaded", () => {
             hideSeeMoreText(count);
             reverseArrow(count, arrow);
             applyAnimation(count);
+            setTimeout(() => {
+              descriptions.forEach((el) => (el.scrollTop = 0));
+            }, 700)
           }
         } else if (
           (rect === null ||
@@ -96,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
             touchStartY >= rect.bottom ||
             reachTop) &&
           diffY > 0 &&
-          Math.abs(diffY) > 200
+          Math.abs(diffY) > 190
         ) {
           if (count > 0) {
             window.scrollTo({
@@ -107,20 +117,27 @@ document.addEventListener("DOMContentLoaded", () => {
             count--;
             hideSeeMoreText(count);
             reverseArrow(count, arrow);
+            setTimeout(() => {
+              descriptions.forEach((el) => (el.scrollTop = 0));
+            }, 700)
           }
         }
       }
     });
     
     arrow.addEventListener("click", () => {
+      const descriptions = document.querySelectorAll(".description");
       if (count === 4) {
         window.scrollTo({
-          top: window.scrollY + pages[count - 1].getBoundingClientRect().top,
+          top: 0,
           behavior: "smooth",
         });
         count--;
         hideSeeMoreText(count);
         reverseArrow(count, arrow);
+        setTimeout(() => {
+              descriptions.forEach((el) => (el.scrollTop = 0));
+            }, 700)
       }
       else if (count >= 0) {
         window.scrollTo({
@@ -131,6 +148,9 @@ document.addEventListener("DOMContentLoaded", () => {
         hideSeeMoreText(count);
         reverseArrow(count, arrow);
         applyAnimation(count);
+        setTimeout(() => {
+              descriptions.forEach((el) => (el.scrollTop = 0));
+        }, 700)
       }
     })
 

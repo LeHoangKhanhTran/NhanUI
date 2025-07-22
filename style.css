@@ -207,3 +207,14 @@ h1 {
 		height: 55%;
 	}
 } */
+
+@media screen and (max-width: 391px){
+	.page img {
+		max-width: 99%;
+		aspect-ratio: 1;
+	}
+
+	#first-page img {
+		max-width: 115%;
+	}
+}
