@@ -3,57 +3,59 @@ document.addEventListener("DOMContentLoaded", () => {
     const pages = document.getElementsByClassName("page");
     const arrow = document.getElementById("arrow");
     document.addEventListener("wheel", (event) => {
+        event.stopPropagation();
         if (!event.target.parentElement.classList.contains("description")) {
           event.preventDefault();
-        }
-        const descriptions = document.querySelectorAll(".description");
-        const description = descriptions[count];
-        const rect = description ? description.getBoundingClientRect() : null;
-        const scrollTop = description ? description.scrollTop : 0;
-        const scrollHeight = description ? description.scrollHeight : 0;
-        const clientHeight = description ? description.clientHeight : 0;
-        const reachBottom = scrollTop + clientHeight >= scrollHeight - 1;
-        const reachTop = description && scrollTop === 0;
-        if (
-          (rect === null ||
+          const descriptions = document.querySelectorAll(".description");
+          const description = descriptions[count];
+          const rect = description ? description.getBoundingClientRect() : null;
+          const scrollTop = description ? description.scrollTop : 0;
+          const scrollHeight = description ? description.scrollHeight : 0;
+          const clientHeight = description ? description.clientHeight : 0;
+          const reachBottom = scrollTop + clientHeight >= scrollHeight - 1;
+          const reachTop = description && scrollTop === 0;
+          if (
+            (rect === null ||
+              touchStartY <= rect.top ||
+              touchStartY >= rect.bottom ||
+              reachBottom) &&
+            event.deltaY > 0
+          ) {
+            if (count < 4) {
+              window.scrollTo({
+                top: window.scrollY + pages[count].clientHeight,
+                behavior: "smooth",
+              });
+              count++;
+              hideSeeMoreText(count);
+              reverseArrow(count, arrow);
+              applyAnimation(count);
+              setTimeout(() => {
+                descriptions.forEach((el) => (el.scrollTop = 0));
+              }, 700);
+            }
+          } else if (
+            rect === null ||
             touchStartY <= rect.top ||
             touchStartY >= rect.bottom ||
-            reachBottom) &&
-          event.deltaY > 0
-        ) {
-          if (count < 4) {
-            window.scrollTo({
-              top: window.scrollY + pages[count].clientHeight,
-              behavior: "smooth",
-            });
-            count++;
-            hideSeeMoreText(count);
-            reverseArrow(count, arrow);
-            applyAnimation(count);
-            setTimeout(() => {
-              descriptions.forEach((el) => (el.scrollTop = 0));
-            }, 700)
-          }
-        } else if (
-          rect === null ||
-          touchStartY <= rect.top ||
-          touchStartY >= rect.bottom ||
-          (reachTop && event.deltaY < 0)
-        ) {
-          if (count > 0) {
-            window.scrollTo({
-              top:
-                window.scrollY + pages[count - 1].getBoundingClientRect().top,
-              behavior: "smooth",
-            });
-            count--;
-            hideSeeMoreText(count);
-            reverseArrow(count, arrow);
-            setTimeout(() => {
-              descriptions.forEach((el) => (el.scrollTop = 0));
-            }, 700)
+            (reachTop && event.deltaY < 0)
+          ) {
+            if (count > 0) {
+              window.scrollTo({
+                top:
+                  window.scrollY + pages[count - 1].getBoundingClientRect().top,
+                behavior: "smooth",
+              });
+              count--;
+              hideSeeMoreText(count);
+              reverseArrow(count, arrow);
+              setTimeout(() => {
+                descriptions.forEach((el) => (el.scrollTop = 0));
+              }, 700);
+            }
           }
         }
+        
     }, { passive: false });
     
     let touchStartY = 0;
@@ -132,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
           top: 0,
           behavior: "smooth",
         });
-        count--;
+        count = 0;
         hideSeeMoreText(count);
         reverseArrow(count, arrow);
         setTimeout(() => {
