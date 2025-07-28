@@ -112,7 +112,13 @@ h1 {
 	border-top-left-radius: 2.5rem;
 	border-top-right-radius: 2.5rem;
 	box-shadow: 0px -10px 20px 0px rgba(0, 0, 0, 0.1);
-	overflow-y: scroll;
+	overflow: auto; /* or scroll */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.description::-webkit-scrollbar {
+  display: none; /* Webkit (Chrome, Safari, Edge) */
 }
 
 .description legend {
