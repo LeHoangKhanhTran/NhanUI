@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
               count++;
               hideSeeMoreText(count);
               reverseArrow(count, arrow);
-              applyAnimation(count);
+              // applyAnimation(count);
               setTimeout(() => {
                 descriptions.forEach((el) => (el.scrollTop = 0));
               }, 700);
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
             count++;
             hideSeeMoreText(count);
             reverseArrow(count, arrow);
-            applyAnimation(count);
+            // applyAnimation(count);
             setTimeout(() => {
               descriptions.forEach((el) => (el.scrollTop = 0));
             }, 700)
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
         count++;
         hideSeeMoreText(count);
         reverseArrow(count, arrow);
-        applyAnimation(count);
+        // applyAnimation(count);
         setTimeout(() => {
               descriptions.forEach((el) => (el.scrollTop = 0));
         }, 700)
@@ -183,14 +183,14 @@ function reverseArrow(count, arrow) {
   }
 }
 
-function applyAnimation(count) {
-  if (count > 0) {
-    let page = document.querySelectorAll(".page")[count];
-    let image = page.querySelector("img");
-    let description = page.querySelector(".description");
-    if (!image.classList.contains("zoom-out") && !description.classList.contains("show-up")) {
-      image.classList.add("zoom-out");
-      description.classList.add("show-up");
-    }
-  }
-}
+// function applyAnimation(count) {
+//   if (count > 0) {
+//     let page = document.querySelectorAll(".page")[count];
+//     let image = page.querySelector("img");
+//     let description = page.querySelector(".description");
+//     if (!image.classList.contains("zoom-out") && !description.classList.contains("show-up")) {
+//       image.classList.add("zoom-out");
+//       description.classList.add("show-up");
+//     }
+//   }
+// }
